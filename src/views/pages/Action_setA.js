@@ -7,6 +7,14 @@ let Action_setA = {
       return createCards(cardsContent);
   }
   , after_render: async () => {
+    const container = document.getElementById('page_container');
+    container.onclick = function(event) {
+      if (event.target.className != 'front') {
+        return
+      }
+      let card = event.target.closest('.card-container');
+      card.remove();
+    }
   }
 }
 export default Action_setA;
