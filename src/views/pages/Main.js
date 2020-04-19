@@ -1,55 +1,65 @@
-import cards from "../../assets/cards.js";
+/* eslint-disable consistent-return */
+import { itemList } from "../../assets/cards";
+import { gameEnv } from "../../services/Variables";
+import { gameModeCheck } from "../../services/GameFunctions";
 
-export let getTitleList = async () => {
+export const getTitleList = async () => {
   try {
-    const titleList = cards[0];
+    const titleList = itemList.title;
     return titleList;
-
   } catch (err) {
-    console.log('Error to get list of titles', err);
+    throw new Error("Error to get list of titles", err);
   }
-}
+};
 
-let getImageList = async () => {
+const getImageList = async () => {
   try {
-    const imagesList = cards[1];
+    const imagesList = itemList.image;
     return imagesList;
-
   } catch (err) {
-    console.log('Error to get list of images', err);
+    throw new Error("Error to get list of images", err);
   }
-}
+};
 
-export let getLinkList = async () => {
+export const getLinkList = async () => {
   try {
-    const linkList = cards[2];
+    const linkList = itemList.link;
     return linkList;
-
   } catch (err) {
-    console.log('Error to get list of links', err);
+    throw new Error("Error to get list of links", err);
   }
-}
+};
 
-let Main = {
+const Main = {
   render: async () => {
-    let mainCardTitle = await getTitleList();
-    let mainCardImage = await getImageList();
-    let mainCardLink = await getLinkList();
+    const mainCardTitle = await getTitleList();
+    const mainCardImage = await getImageList();
+    const mainCardLink = await getLinkList();
 
-    let view = '';
-    
-    for(let i = 0; i < mainCardTitle.length; i++) {
-      view += /*html*/`
-      <a href=${'/#' + mainCardLink[i]} class="main-card green">
-      <img src=${"./assets" + mainCardImage[i]} alt="" srcset="">
-      ${mainCardTitle[i]}
-    </a>
-      `
+    let view = "";
+
+    for (let i = 0; i < mainCardTitle.length; i += 1) {
+      if (gameEnv.gameMode === false) {
+        view += /* html */ `
+        <a href=${`/#${mainCardLink[i]}`} class="main-card green">
+        <img src=${`./assets${mainCardImage[i]}`} alt="" srcset="">
+        ${mainCardTitle[i]}
+        </a>
+        `;
+      } else {
+        view += /* html */ `
+        <a href=${`/#${mainCardLink[i]}`} class="main-card">
+        <img src=${`./assets${mainCardImage[i]}`} alt="" srcset="">
+        ${mainCardTitle[i]}
+        </a>
+        `;
+      }
     }
-    return view
+    return view;
   },
-  after_render: async () => { }
-
-}
+  after_render: async () => {
+    gameModeCheck();
+  },
+};
 
 export default Main;

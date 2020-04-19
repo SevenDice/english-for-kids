@@ -3,9 +3,9 @@ import { createCards, getCards } from "../../services/GenerateCards";
 import { playWord, startGame, flipCard } from "../../services/GameFunctions";
 
 
-const Emotions = {
+const AnimalSetA = {
   render: async () => {
-    const cardsContent = await getCards(categories.emotions);
+    const cardsContent = await getCards(categories.animal_set_a);
     return createCards(cardsContent);
   }
   , after_render: async () => {
@@ -14,4 +14,4 @@ const Emotions = {
     startGame();
   }
 }
-export default Emotions;
+export default AnimalSetA;

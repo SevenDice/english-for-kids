@@ -1,43 +1,17 @@
-import cards from "../../assets/cards.js";
+import { categories } from "../../assets/cards";
+import { createCards, getCards } from "../../services/GenerateCards";
+import { playWord, startGame, flipCard } from "../../services/GameFunctions";
 
-let getCards = async () => {
-  try {
-    const cardsData = cards[7];
-    return cardsData;
-  }
 
-  catch (err) {
-    console.log('Error to get cards data', err);
-  }
-}
-
-let Clothes = {
-  render : async () => {
-    let cardsContent =  await getCards();
-    let view = '';
-
-    view += /*html*/`<div class="rating none"></div>`
-
-    for(let i = 0; i < cardsContent.length; i++) {
-      view += /*html*/`
-      <div class="card-container">
-          <div class="card card-cover">
-            <div class="front" style="background-image: url(../../assets${cardsContent[i].image});">
-              <div class="card-header ">${cardsContent[i].word}</div>
-            </div>
-            <div class="back" style="background-image: url(../../assets${cardsContent[i].image});">
-              <div class="card-header ">${cardsContent[i].translation}</div>
-            </div>
-            <div class="rotate"></div>
-          </div>
-        </div>
-      `
-      // class "none" for hide content inside card
-    }
-
-      return view
+const Clothes = {
+  render: async () => {
+    const cardsContent = await getCards(categories.clothes);
+    return createCards(cardsContent);
   }
   , after_render: async () => {
+    playWord();
+    flipCard();
+    startGame();
   }
 }
 export default Clothes;
