@@ -15,7 +15,6 @@ JS SPA Web application for training english words
 ## Technologies:
 
 - Babel
-- SASS
 - ESLint
 - Webpack
 
